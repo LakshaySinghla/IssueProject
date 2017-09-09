@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.navigation_profile:
-                    if(!(m instanceof MyProfileFragment2)) {
-                        selectedfragment = MyProfileFragment2.newFragment();
-                        ((MyProfileFragment2) selectedfragment).setMainActivity(MainActivity.this);
+                    if(!(m instanceof MyProfileFragment)) {
+                        selectedfragment = MyProfileFragment.newFragment();
+                        ((MyProfileFragment) selectedfragment).setMainActivity(MainActivity.this);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
                         ft.replace(R.id.content, selectedfragment, "MyProfile");

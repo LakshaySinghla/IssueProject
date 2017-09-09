@@ -25,7 +25,9 @@
         <ImageView
             android:id="@+id/dp"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_person"
+            android:scaleType="fitCenter"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
+        android:text="Description Of Topic"
         />
 
     <LinearLayout

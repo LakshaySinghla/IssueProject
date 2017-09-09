@@ -15,50 +15,43 @@ import java.util.ArrayList;
  * Created by Lakshay Singhla on 09-Sep-17.
  */
 
-public class PostFragment extends Fragment {
+public class UserCommentFragment extends Fragment {
 
     RecyclerView rv;
+    UserCommentListAdapter adapter;
     ArrayList<String> list = new ArrayList<>();
-    PostAdapter adapter;
 
-    public PostFragment(){
+    public UserCommentFragment(){
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_post, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_user_comment, container, false);
 
-
-        adapter = new PostAdapter();
+        list.add("Comment 1");
+        list.add("Comment 2");
+        list.add("Comment 3");
+        list.add("Comment 4");
+        list.add("Comment 5");
+        list.add("Comment 6");
+        list.add("Comment 7");
+        list.add("Comment 8");
+        list.add("Comment 9");
+        list.add("Comment 10");
+        list.add("Comment 11");
+        list.add("Comment 12");
+        list.add("Comment 13");
+        list.add("Comment 14");
+        adapter = new UserCommentListAdapter();
         adapter.setList(list);
+        adapter.setUserCommentFragment(this);
+        rv = (RecyclerView) rootview.findViewById(R.id.comment_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rv = (RecyclerView) rootview.findViewById(R.id.post_list);
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
 
         return rootview;
-    }
-
-    @Override
-    public void onResume() {
-        list.add("Title1");
-        list.add("Title2");
-        list.add("Title3");
-        list.add("Title4");
-        list.add("Title5");
-        list.add("Title6");
-        list.add("Title7");
-        list.add("Title8");
-        list.add("Title9");
-        list.add("Title10");
-        list.add("Title11");
-        list.add("Title12");
-        list.add("Title13");
-        list.add("Title14");
-        list.add("Title15");
-        adapter.notifyDataSetChanged();
-        super.onResume();
     }
 }

@@ -16,12 +16,12 @@ import android.view.ViewGroup;
  * Created by Lakshay Singhla on 09-Sep-17.
  */
 
-public class MyProfileFragment2 extends Fragment {
+public class MyProfileFragment extends Fragment {
 
     MainActivity mainActivity;
 
-    public static MyProfileFragment2 newFragment(){
-        return new MyProfileFragment2();
+    public static MyProfileFragment newFragment(){
+        return new MyProfileFragment();
     }
     void setMainActivity(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -30,9 +30,9 @@ public class MyProfileFragment2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_my_profile_two, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_my_profile, container, false);
         Toolbar tb = rootview.findViewById(R.id.tool_bar);
-        tb.setTitle("hi");
+        tb.setTitle("Name");
         mainActivity.setSupportActionBar(tb);
 
         ViewPager pager = rootview.findViewById(R.id.view_pager);
@@ -46,7 +46,7 @@ public class MyProfileFragment2 extends Fragment {
     }
 
     public class Viewpageradapter extends FragmentPagerAdapter {
-        String tabTitle[] = new String[] {"About","Post","Comment"};
+        String tabTitle[] = new String[] {"Complaints","Comment"};
 
         public Viewpageradapter(FragmentManager fm){
             super(fm);
@@ -55,10 +55,9 @@ public class MyProfileFragment2 extends Fragment {
         @Override
         public Fragment getItem(int position) {
             switch (position){
-                case 0:return new AboutFragment();
-                case 1:return new PostFragment();
-                case 2:return new CommentFragment();
-                default:return new AboutFragment();
+                case 0:return new UserComplaintFragment();
+                case 1:return new UserCommentFragment();
+                default:return new UserComplaintFragment();
             }
 
         }
