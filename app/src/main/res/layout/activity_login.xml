@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -44,21 +43,6 @@
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:gravity="end">
-
-            <TextView
-                android:id="@+id/forgot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Forgot Password?" />
-
-        </LinearLayout-->
-
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
@@ -74,24 +58,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_vertical">
             <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="#d6d6d6"
-                android:layout_margin="30dp"/>
+                android:background="#d6d6d6" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Or" />
+                android:text="Or"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"/>
             <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:layout_weight="1"
                 android:background="#d6d6d6"
-                android:layout_margin="30dp"/>
+                />
         </LinearLayout>
 
         <Button

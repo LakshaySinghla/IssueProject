@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingTop="10dp">
 
     <TextView
@@ -12,45 +11,48 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:text="Ques Title"
-        android:textSize="20sp"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        />
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="5dp">
+        android:paddingLeft="10dp">
+
         <ImageView
             android:id="@+id/dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_action_person"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_person" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center"
             android:orientation="vertical"
-            android:layout_gravity="center_vertical" android:gravity="center">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="My name"
-                android:textColor="@color/black"
-                android:textSize="18sp"
                 android:layout_marginBottom="10dp"
-                />
+                android:text="By name"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Posted On: date"
-                />
+                android:text="Posted On: date" />
         </LinearLayout>
     </LinearLayout>
 
@@ -59,42 +61,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Description Of Topic"
-        />
+        android:text="Description Of Topic" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#d6d6d6"/>
+        android:background="#d6d6d6" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp">
+
         <ImageView
             android:id="@+id/upvote"
-            android:src="@drawable/ic_thumb_up"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:src="@drawable/ic_thumb_up" />
+
         <ImageView
             android:id="@+id/downvote"
-            android:src="@drawable/ic_thumb_down"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_thumb_down" />
+
         <TextView
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="Share"
-            android:textSize="18sp"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="18sp" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#d6d6d6"/>
+        android:background="#d6d6d6" />
 
 </LinearLayout>

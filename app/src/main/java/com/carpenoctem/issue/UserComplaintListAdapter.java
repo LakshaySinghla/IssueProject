@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,11 +17,26 @@ import java.util.ArrayList;
 public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaintListAdapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView title;
+        TextView title, name, date, description, share;
+        ImageView img, up, down;
         public MyViewHolder(View itemView) {
             super(itemView);
             title= (TextView) itemView.findViewById(R.id.title);
+            name= (TextView) itemView.findViewById(R.id.name);
+            date= (TextView) itemView.findViewById(R.id.date);
+            description= (TextView) itemView.findViewById(R.id.description);
+            share= (TextView) itemView.findViewById(R.id.share);
+            img= (ImageView) itemView.findViewById(R.id.dp);
+            down= (ImageView) itemView.findViewById(R.id.downvote);
+            up= (ImageView) itemView.findViewById(R.id.upvote);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(userComplaintFragment.getContext(),CompleteComplaintActivity.class);
+                    userComplaintFragment.getActivity().startActivity(i);
+                }
+            });
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -31,10 +47,10 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
         }
     }
 
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<ComplaintData> list = new ArrayList<>();
     UserComplaintFragment userComplaintFragment;
 
-    void setList(ArrayList list){
+    void setList(ArrayList<ComplaintData> list){
         this.list = list;
     }
 
@@ -50,7 +66,10 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.title.setText(list.get(position));
+        holder.title.setText("Title: "+list.get(position).getTitle());
+        holder.name.setText( "Name: "+ list.get(position).getByName());
+        holder.date.setText("Date: "+list.get(position).getDate());
+        holder.description.setText("Description: " +list.get(position).getDescription());
     }
 
     @Override

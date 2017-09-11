@@ -61,13 +61,16 @@
         android:padding="15dp"
         android:text="Description"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#d6d6d6"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="10dp">
+        android:paddingLeft="10dp">
         <ImageView
             android:id="@+id/upvote"
             android:src="@drawable/ic_thumb_up"

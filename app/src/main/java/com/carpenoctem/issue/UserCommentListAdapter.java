@@ -32,10 +32,10 @@ public class UserCommentListAdapter extends RecyclerView.Adapter<UserCommentList
         }
     }
 
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<CommentData> list = new ArrayList<>();
     UserCommentFragment userCommentFragment;
 
-    void setList(ArrayList<String> list){
+    void setList(ArrayList<CommentData> list){
         this.list = list;
     }
     public void setUserCommentFragment(UserCommentFragment userCommentFragment) {
@@ -50,7 +50,7 @@ public class UserCommentListAdapter extends RecyclerView.Adapter<UserCommentList
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.comment.setText(list.get(position));
+        holder.comment.setText("Body: "+list.get(position).getBody());
     }
 
     @Override
