@@ -67,7 +67,7 @@
         android:layout_height="2dp"
         android:background="#d6d6d6"/>
 
-    <LinearLayout
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -91,7 +91,17 @@
             android:text="Share"
             android:textSize="18sp"
             android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/write_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginRight="10dp"
+            android:text="Comment"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout-->
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"

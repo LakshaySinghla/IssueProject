@@ -10,4 +10,5 @@ public class AppUrls {
     static String Url_SignUp = Url_base + "users";
     static String Url_Login = Url_base + "user_token";
     static String Url_UserData = Url_base + "users/";
+    static String Url_Complaints = Url_base + "complaints" ;
 }

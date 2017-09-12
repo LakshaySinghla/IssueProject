@@ -34,13 +34,6 @@ public class UserComplaintFragment extends Fragment {
         rv = (RecyclerView) rootview.findViewById(R.id.post_list);
         empty = (ImageView) rootview.findViewById(R.id.empty);
 
-        ComplaintData c = new ComplaintData();
-        c.setDescription("Description 1");
-        c.setTitle("Title 1");
-        c.setDate("Date 1");
-        c.setByName("By Name 1");
-        c.setId("Id 1");
-        list.add(c);
         if(list.size() > 0) {
             empty.setVisibility(View.GONE);
             rv.setVisibility(View.VISIBLE);

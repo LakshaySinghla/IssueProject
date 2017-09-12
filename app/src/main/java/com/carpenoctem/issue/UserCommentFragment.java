@@ -35,11 +35,6 @@ public class UserCommentFragment extends Fragment {
         rv = (RecyclerView) rootview.findViewById(R.id.comment_list);
         empty = (ImageView) rootview.findViewById(R.id.empty);
 
-        CommentData c = new CommentData();
-        c.setId("Id 1");
-        c.setUserId("User Id 1");
-        c.setBody("Body 1");
-        list.add(c);
         if(list.size() > 0) {
             empty.setVisibility(View.GONE);
             rv.setVisibility(View.VISIBLE);

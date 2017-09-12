@@ -28,7 +28,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter {
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder{
-        TextView title, name, date, description, share;
+        TextView title, name, date, description, share, comment;
         ImageView img, up, down;
 
         public HeaderViewHolder(View itemView) {
@@ -37,6 +37,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter {
             name = (TextView) itemView.findViewById(R.id.name);
             date = (TextView) itemView.findViewById(R.id.date);
             description = (TextView) itemView.findViewById(R.id.description);
+            comment = (TextView) itemView.findViewById(R.id.write_comment);
             share = (TextView) itemView.findViewById(R.id.share);
             img = (ImageView) itemView.findViewById(R.id.dp);
             up = (ImageView) itemView.findViewById(R.id.upvote);

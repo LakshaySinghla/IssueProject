@@ -17,18 +17,15 @@ import java.util.ArrayList;
 public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaintListAdapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView title, name, date, description, share;
-        ImageView img, up, down;
+        TextView title, name, date, description;
+        ImageView img;
         public MyViewHolder(View itemView) {
             super(itemView);
             title= (TextView) itemView.findViewById(R.id.title);
             name= (TextView) itemView.findViewById(R.id.name);
             date= (TextView) itemView.findViewById(R.id.date);
             description= (TextView) itemView.findViewById(R.id.description);
-            share= (TextView) itemView.findViewById(R.id.share);
             img= (ImageView) itemView.findViewById(R.id.dp);
-            down= (ImageView) itemView.findViewById(R.id.downvote);
-            up= (ImageView) itemView.findViewById(R.id.upvote);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -37,13 +34,7 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
                     userComplaintFragment.getActivity().startActivity(i);
                 }
             });
-            title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(userComplaintFragment.getContext(),CompleteComplaintActivity.class);
-                    userComplaintFragment.getActivity().startActivity(i);
-                }
-            });
+
         }
     }
 

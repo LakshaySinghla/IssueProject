@@ -1,6 +1,7 @@
 package com.carpenoctem.issue;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,6 +28,22 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Lakshay Singhla on 09-Sep-17.
  */
@@ -39,6 +57,7 @@ public class MyProfileFragment extends Fragment{
     Toolbar tb;
     ImageView menu;
     TextView location, name;
+    RequestQueue queue;
 
     public static MyProfileFragment newFragment(){
         return new MyProfileFragment();
@@ -51,21 +70,23 @@ public class MyProfileFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_my_profile, container, false);
-
         tb = rootview.findViewById(R.id.tool_bar);
         mainActivity.setSupportActionBar(tb);
+        location = (TextView) rootview.findViewById(R.id.location);
+        name = (TextView) rootview.findViewById(R.id.name);
 
         pager = rootview.findViewById(R.id.view_pager);
         tabLayout = rootview.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
-        adapter = new Viewpageradapter(getChildFragmentManager());
-        pager.setAdapter(adapter);
-
-        location = (TextView) rootview.findViewById(R.id.location);
-        location.setText("Location:"+ mainActivity.userData.getLocation() );
-        name = (TextView) rootview.findViewById(R.id.name);
-        name.setText( mainActivity.userData.getName() );
+        //if(mainActivity.userData == null){
+            getUserData();
+        //}else{
+        //    location.setText("Location:"+ mainActivity.userData.getLocation() );
+        //    name.setText( mainActivity.userData.getName() );
+        //    adapter = new Viewpageradapter(getChildFragmentManager());
+        //    pager.setAdapter(adapter);
+        //}
 
         menu = (ImageView) rootview.findViewById(R.id.custom_menu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -156,4 +177,98 @@ public class MyProfileFragment extends Fragment{
             return tabTitle[position];
         }
     }
+
+    void getUserData(){
+        String url = AppUrls.Url_UserData + getPreference("user_id");
+        queue = Volley.newRequestQueue(mainActivity);
+        final ProgressDialog progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(null);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v("Lakshay", response.toString() );
+                        try{
+                            mainActivity.userData = new UserData();
+                            JSONObject data = response.getJSONObject("data");
+                            JSONObject json1 = new JSONObject();
+                            mainActivity.userData.setId( data.getString("id") );
+                            json1 = data.getJSONObject("attributes");
+                            mainActivity.userData.setName( json1.getString("full-name") );
+                            mainActivity.userData.setEmail( json1.getString("email") );
+                            mainActivity.userData.setLocation( json1.getString("state") );
+                            json1 = data.getJSONObject("relationships");
+
+                            JSONObject complaints = json1.getJSONObject("complaints");
+                            JSONArray complaintArray = complaints.getJSONArray("data");
+                            ArrayList<ComplaintData> complaintDataList = new ArrayList<>();
+
+                            //Ye sab recheck karna hai, apne app se likh dia abhi bs
+                            for(int i=0; i < complaintArray.length() ; i++){
+                                JSONObject json2 = complaintArray.getJSONObject(i);
+                                ComplaintData complaintData = new ComplaintData();
+                                complaintData.setId( json2.getString("id") );
+                                //complaintData.setByName( json2.getString("name") );
+                                //complaintData.setDate( json2.getString("date") );
+                                //complaintData.setTitle( json2.getString("title") );
+                                //complaintData.setDescription( json2.getString("description") );
+                                complaintDataList.add(complaintData);
+                            }
+                            mainActivity.userData.setComplaintList(complaintDataList);
+
+                            JSONObject comments = json1.getJSONObject("comments");
+                            JSONArray commentArray = comments.getJSONArray("data");
+                            ArrayList<CommentData> commentList = new ArrayList<>();
+                            for(int i=0; i < commentArray.length() ; i++){
+                                JSONObject json2 = commentArray.getJSONObject(i);
+                                CommentData commentData = new CommentData();
+                                commentData.setId( json2.getString("id") );
+                                commentData.setBody( json2.getString("body") );
+                                commentData.setUserId( json2.getString("user-id") );
+                                commentData.setComplaintId( json2.getString("complaint-id") );
+                                commentData.setDate( json2.getString("created-at") );
+                                commentList.add(commentData);
+                            }
+                            mainActivity.userData.setCommentList(commentList);
+                            location.setText("Location:"+ mainActivity.userData.getLocation() );
+                            name.setText( mainActivity.userData.getName() );
+
+                            adapter = new Viewpageradapter(getChildFragmentManager());
+                            pager.setAdapter(adapter);
+                            progressDialog.dismiss();
+
+                        }
+                        catch (JSONException e){
+                            Log.v("JsonError",e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("Lakshay","Error Response: "+error.toString());
+                        progressDialog.dismiss();
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params =  new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put( "Authorization",getPreference("auth") );
+                return params;
+            }
+        };
+        queue.add(jsonRequest);
+    }
+
+    public String getPreference(String key ){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+        Log.v("Lakshay","MainActivity Inside getpreference, "+key+": "+ preferences.getString(key, null));
+        return preferences.getString(key, null);
+    }
+
 }
