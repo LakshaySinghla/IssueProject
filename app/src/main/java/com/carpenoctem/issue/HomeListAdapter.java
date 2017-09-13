@@ -1,6 +1,9 @@
 package com.carpenoctem.issue;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +51,7 @@ public class HomeListAdapter extends RecyclerView.Adapter{
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         homeFragment.performComment( list.get(getAdapterPosition()-1).getId(),writeComment.getText().toString(), getAdapterPosition()-1 );
                         comment_container.setVisibility(View.GONE);
+                        comment.setVisibility(View.VISIBLE);
                         writeComment.setText("");
                         return true;
                     }
@@ -161,11 +165,12 @@ public class HomeListAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof HeaderViewHolder){
-
+            ((HeaderViewHolder)holder).name.setText( "Name " + getPreference("user_id") );
         }
         else{
             ((ListViewHolder)holder).title.setText(list.get(position-1).getTitle() );
-            ((ListViewHolder)holder).date.setText(list.get(position-1).getDate() );
+            ((ListViewHolder)holder).date.setText("Date"+list.get(position-1).getDate() );
+            ((ListViewHolder)holder).name.setText( "Name" + list.get(position-1).getUserId() );
             ((ListViewHolder)holder).description.setText(list.get(position-1).getDescription() );
         }
     }
@@ -180,5 +185,10 @@ public class HomeListAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
         return (list.size()+1);
+    }
+
+    public String getPreference(String key ){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homeFragment.getContext());
+        return preferences.getString(key, null);
     }
 }

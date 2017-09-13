@@ -91,7 +91,7 @@
             android:textSize="18sp"
             android:layout_gravity="center_vertical"/>
         <TextView
-            android:id="@+id/write_comment"
+            android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
@@ -99,6 +99,7 @@
             android:text="Comment"
             android:textSize="18sp"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             />
     </LinearLayout>
 
@@ -106,5 +107,48 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#d6d6d6"/>
+    <LinearLayout
+        android:id="@+id/comment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d6d6d6"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/user_dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_action_person"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:layout_marginBottom="5dp"/>
+            <EditText
+                android:id="@+id/write_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Comment"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/border_box"
+                android:padding="3dp"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/close"
+            android:src="@drawable/ic_action_clear"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

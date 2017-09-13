@@ -21,7 +21,9 @@ public class UserComplaintFragment extends Fragment {
     RecyclerView rv;
     ImageView empty;
     ArrayList<ComplaintData> list = new ArrayList<>();
+    String name;
     UserComplaintListAdapter adapter;
+
 
     public UserComplaintFragment(){
 
@@ -39,6 +41,7 @@ public class UserComplaintFragment extends Fragment {
             rv.setVisibility(View.VISIBLE);
             adapter = new UserComplaintListAdapter();
             adapter.setList(list);
+            adapter.setUserName(name);
             adapter.setUserComplaintFragment(this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
             rv.setLayoutManager(layoutManager);
@@ -53,6 +56,9 @@ public class UserComplaintFragment extends Fragment {
 
     void setList(ArrayList<ComplaintData> list){
         this.list = list;
+    }
+    void setName(String name){
+        this.name = name;
     }
 
 }

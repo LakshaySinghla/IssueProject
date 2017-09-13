@@ -160,6 +160,7 @@ public class MyProfileFragment extends Fragment{
             switch (position){
                 case 0: UserComplaintFragment userComplaintFragment= new UserComplaintFragment();
                     userComplaintFragment.setList(mainActivity.userData.getComplaintList());
+                    userComplaintFragment.setName(mainActivity.userData.getName());
                     return userComplaintFragment;
                 case 1: UserCommentFragment userCommentFragment = new UserCommentFragment();
                     userCommentFragment.setList(mainActivity.userData.getCommentList());
@@ -200,50 +201,47 @@ public class MyProfileFragment extends Fragment{
                             mainActivity.userData.setName( json1.getString("full-name") );
                             mainActivity.userData.setEmail( json1.getString("email") );
                             mainActivity.userData.setLocation( json1.getString("state") );
-                            json1 = data.getJSONObject("relationships");
 
-                            JSONObject complaints = json1.getJSONObject("complaints");
-                            JSONArray complaintArray = complaints.getJSONArray("data");
-                            ArrayList<ComplaintData> complaintDataList = new ArrayList<>();
-
-                            //Ye sab recheck karna hai, apne app se likh dia abhi bs
-                            for(int i=0; i < complaintArray.length() ; i++){
-                                JSONObject json2 = complaintArray.getJSONObject(i);
-                                ComplaintData complaintData = new ComplaintData();
-                                complaintData.setId( json2.getString("id") );
-                                //complaintData.setByName( json2.getString("name") );
-                                //complaintData.setDate( json2.getString("date") );
-                                //complaintData.setTitle( json2.getString("title") );
-                                //complaintData.setDescription( json2.getString("description") );
-                                complaintDataList.add(complaintData);
+                            JSONArray jsonArray = json1.getJSONArray("user-complaints");
+                            ArrayList<ComplaintData> complaintList = new ArrayList<>();
+                            for(int i=0; i< jsonArray.length() ; i++){
+                                JSONObject j1 = jsonArray.getJSONObject(i);
+                                ComplaintData c = new ComplaintData();
+                                c.setId( j1.getString("id") );
+                                c.setTitle( j1.getString("title") );
+                                c.setDescription( j1.getString("description") );
+                                c.setUserId(data.getString("id") );
+                                complaintList.add(c);
                             }
-                            mainActivity.userData.setComplaintList(complaintDataList);
+                            mainActivity.userData.setComplaintList(complaintList);
 
-                            JSONObject comments = json1.getJSONObject("comments");
-                            JSONArray commentArray = comments.getJSONArray("data");
+                            json1 = data.getJSONObject("relationships");
+                            JSONObject json2 = json1.getJSONObject("comments");
+                            jsonArray = json2.getJSONArray("data");
                             ArrayList<CommentData> commentList = new ArrayList<>();
-                            for(int i=0; i < commentArray.length() ; i++){
-                                JSONObject json2 = commentArray.getJSONObject(i);
-                                CommentData commentData = new CommentData();
-                                commentData.setId( json2.getString("id") );
-                                commentData.setBody( json2.getString("body") );
-                                commentData.setUserId( json2.getString("user-id") );
-                                commentData.setComplaintId( json2.getString("complaint-id") );
-                                commentData.setDate( json2.getString("created-at") );
-                                commentList.add(commentData);
+                            for(int i=0; i<jsonArray.length() ; i++){
+                                JSONObject j1 = jsonArray.getJSONObject(i);
+                                CommentData c =new CommentData();
+                                c.setId( j1.getString("id") );
+                                c.setBody( j1.getString("body") );
+                                c.setUserId( j1.getString("user-id") );
+                                c.setComplaintId( j1.getString("complaint-id") );
+                                c.setDate( j1.getString("created-at") );
+                                commentList.add(c);
                             }
                             mainActivity.userData.setCommentList(commentList);
+
                             location.setText("Location:"+ mainActivity.userData.getLocation() );
                             name.setText( mainActivity.userData.getName() );
 
                             adapter = new Viewpageradapter(getChildFragmentManager());
                             pager.setAdapter(adapter);
-                            progressDialog.dismiss();
 
                         }
                         catch (JSONException e){
                             Log.v("JsonError",e.toString());
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {

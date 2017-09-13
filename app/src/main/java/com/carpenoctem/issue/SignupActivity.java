@@ -36,13 +36,12 @@ import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText mfname, mlname, mpassword, mcpassword, memail;
+    EditText mfname, mlname, mpassword, mcpassword, memail, mstate;
     Button signup_btn;
     TextView login_link;
     private RequestQueue queue ;
     double back_pressed;
-
-    private String email, password, confirmPassword, name, auth;
+    private String email, password, confirmPassword, name, auth, state;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
 
         memail = (EditText) findViewById(R.id.input_email);
+        mstate = (EditText) findViewById(R.id.input_state);
         mfname = (EditText) findViewById(R.id.input_first_name);
         mlname = (EditText) findViewById(R.id.input_last_name);
         mpassword = (EditText) findViewById(R.id.input_password);
@@ -65,7 +65,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_signup:
-                if(checkEmail() && checkPassword())
+                if(checkEmail() && checkPassword() && checkState())
                     executeSignUp();
                 break;
             case R.id.link_login:
@@ -75,6 +75,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             default:break;
         }
+    }
+
+    private boolean checkState(){
+        state = mstate.getText().toString() ;
+        if(state.length() == 0 ){
+            mstate.setError("Enter Something");
+            return false;
+        }
+        else return true;
     }
 
     private boolean checkEmail(){
@@ -101,14 +110,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         queue = Volley.newRequestQueue(this);
 
         name = mfname.getText().toString() + " " + mlname.getText().toString();
-        //String url = "https://young-falls-50132.herokuapp.com/api/v1/users";
 
         JSONObject jsonObject = new JSONObject();
         final JSONObject json = new JSONObject();
-        //JSONObject jsonObject1= new JSONObject();
         try {
-            //jsonObject.put("type","users");
             json.put("full_name", name);
+            json.put("state", state);
             json.put("email",email);
             json.put("password",password);
             json.put("password_confirmation", confirmPassword);

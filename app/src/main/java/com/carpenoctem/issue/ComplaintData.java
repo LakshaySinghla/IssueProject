@@ -23,7 +23,6 @@ public class ComplaintData {
 
     public void setList(ArrayList<CommentData> list) {
         this.list = list;
-        Log.v("Lakshay","list Size: " + this.list.size() );
     }
     public void setTitle(String title) {
         this.title = title;

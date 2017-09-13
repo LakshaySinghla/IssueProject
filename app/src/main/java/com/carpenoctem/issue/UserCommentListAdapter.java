@@ -26,6 +26,7 @@ public class UserCommentListAdapter extends RecyclerView.Adapter<UserCommentList
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(userCommentFragment.getContext(),CompleteComplaintActivity.class);
+                    i.putExtra( "complaint_id",list.get(getAdapterPosition()).getComplaintId() );
                     userCommentFragment.getActivity().startActivity(i);
                 }
             });

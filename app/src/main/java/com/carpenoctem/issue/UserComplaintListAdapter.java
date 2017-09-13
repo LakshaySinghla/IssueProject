@@ -31,6 +31,7 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(userComplaintFragment.getContext(),CompleteComplaintActivity.class);
+                    i.putExtra( "complaint_id",list.get(getAdapterPosition()).getId() );
                     userComplaintFragment.getActivity().startActivity(i);
                 }
             });
@@ -39,10 +40,14 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
     }
 
     ArrayList<ComplaintData> list = new ArrayList<>();
+    String userName;
     UserComplaintFragment userComplaintFragment;
 
     void setList(ArrayList<ComplaintData> list){
         this.list = list;
+    }
+    void setUserName(String name){
+        userName = name;
     }
 
     public void setUserComplaintFragment(UserComplaintFragment userComplaintFragment) {
@@ -58,7 +63,7 @@ public class UserComplaintListAdapter extends RecyclerView.Adapter<UserComplaint
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.title.setText("Title: "+list.get(position).getTitle());
-        holder.name.setText( "Name: "+ list.get(position).getByName());
+        holder.name.setText( "Name: "+ userName );
         holder.date.setText("Date: "+list.get(position).getDate());
         holder.description.setText("Description: " +list.get(position).getDescription());
     }
