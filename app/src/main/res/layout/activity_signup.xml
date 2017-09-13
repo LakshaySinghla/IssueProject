@@ -52,10 +52,10 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp">
             <EditText
-                android:id="@+id/input_state"
+                android:id="@+id/input_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="State/Constituency"
+                android:hint="Last Name"
                 android:inputType="textCapWords" />
         </android.support.design.widget.TextInputLayout>
 
@@ -66,10 +66,10 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp">
             <EditText
-                android:id="@+id/input_last_name"
+                android:id="@+id/input_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
+                android:hint="State/Constituency"
                 android:inputType="textCapWords" />
         </android.support.design.widget.TextInputLayout>
 

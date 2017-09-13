@@ -1,5 +1,6 @@
 package com.carpenoctem.issue;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getPreference("auth") != null){
+        if(getPreference("auth") != null && getPreference("user_id") != null){
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
@@ -57,8 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = (Button) findViewById(R.id.btn_login);
         signup = (Button) findViewById(R.id.btn_signup);
 
-        inputEmail.setText("test3@carpenoctem.com");
-        inputPassword.setText("test1234");
         login.setOnClickListener(this);
         signup.setOnClickListener(this);
     }
@@ -97,6 +96,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void executeLogin(){
         queue = Volley.newRequestQueue(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(null);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
 
         JSONObject jsonObject = new JSONObject();
         JSONObject json = new JSONObject();
@@ -123,7 +126,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             JSONObject json = new JSONObject(new String(decodedBytes, "UTF-8"));
                             String id = json.getString("sub");
                             setPreference("user_id",id);
-                            getPreference("user_id");
 
                             auth = "Bearer " + auth ;
                             setPreference("auth", auth);
@@ -137,12 +139,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         catch (UnsupportedEncodingException e){
                             Log.v("Lakshay","Didn't work Base64");
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.v("Lakshay","Error: "+error.toString() ) ;
+                        Toast.makeText(LoginActivity.this,"Something went wrong\nTry Again",Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 }
         ){

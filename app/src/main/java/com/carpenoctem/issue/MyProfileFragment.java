@@ -79,14 +79,7 @@ public class MyProfileFragment extends Fragment{
         tabLayout = rootview.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
-        //if(mainActivity.userData == null){
-            getUserData();
-        //}else{
-        //    location.setText("Location:"+ mainActivity.userData.getLocation() );
-        //    name.setText( mainActivity.userData.getName() );
-        //    adapter = new Viewpageradapter(getChildFragmentManager());
-        //    pager.setAdapter(adapter);
-        //}
+        getUserData();
 
         menu = (ImageView) rootview.findViewById(R.id.custom_menu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +91,6 @@ public class MyProfileFragment extends Fragment{
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        //Toast.makeText(mainActivity,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                         if(item.getItemId() == R.id.logout){
                             logout();
                         }

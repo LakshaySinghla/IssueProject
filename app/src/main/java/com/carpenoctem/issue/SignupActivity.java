@@ -1,5 +1,6 @@
 package com.carpenoctem.issue;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,6 +113,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         queue = Volley.newRequestQueue(this);
 
         name = mfname.getText().toString() + " " + mlname.getText().toString();
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(null);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
 
         JSONObject jsonObject = new JSONObject();
         final JSONObject json = new JSONObject();
@@ -131,9 +138,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
+                        /*try {
                             Log.v("Lakshay Success:", "Response obtained:" + response.toString());
-                            Toast.makeText(SignupActivity.this, "Successfully Signed up",Toast.LENGTH_SHORT).show();
                             UserData userData = new UserData();
                             JSONObject data = response.getJSONObject("data");
                             JSONObject json1 = new JSONObject();
@@ -181,17 +187,23 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             Intent i = new Intent(SignupActivity.this, MainActivity.class);
                             i.putExtra("Data",userData);
                             startActivity(i);
+                            Toast.makeText(SignupActivity.this, "Successfully Signed up",Toast.LENGTH_SHORT).show();
                             finish();
 
                         }catch (Exception e){
                             Log.v("Error",e.toString());
                         }
+                        */
+                        saveAuth();
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.v("Lakshay", "Response Error:" + error.toString());
+                        Toast.makeText(SignupActivity.this,"Something went wrong\nTry Again",Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 }
         ){
@@ -240,10 +252,26 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         Log.v("Lakshay:Success ","Response: " + response.toString() );
                         try {
                             auth = response.getString("jwt");
+
+                            String[] split = auth.split("\\.");
+                            byte[] decodedBytes = Base64.decode(split[1], Base64.URL_SAFE);
+                            JSONObject json = new JSONObject(new String(decodedBytes, "UTF-8"));
+                            String id = json.getString("sub");
+                            setPreference("user_id",id);
+
                             auth = "Bearer " + auth ;
                             setPreference("auth", auth);
+
+                            Intent i = new Intent(SignupActivity.this, MainActivity.class);
+                            startActivity(i);
+                            Toast.makeText(SignupActivity.this, "Successfully Signed up",Toast.LENGTH_SHORT).show();
+                            finish();
+
                         }
                         catch (JSONException e){
+                            e.getStackTrace();
+                        }
+                        catch (UnsupportedEncodingException e){
                             e.getStackTrace();
                         }
                     }
@@ -251,7 +279,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.v("Lak","Error response"+error.toString());
                     }
                 }
         ){
