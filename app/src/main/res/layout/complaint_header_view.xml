@@ -99,7 +99,7 @@
             android:text="Comment"
             android:textSize="18sp"
             android:layout_gravity="center_vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             />
     </LinearLayout>
 
@@ -115,7 +115,7 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
         <ImageView
             android:id="@+id/user_dp"
             android:layout_width="40dp"

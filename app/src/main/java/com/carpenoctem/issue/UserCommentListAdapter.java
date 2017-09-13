@@ -51,7 +51,7 @@ public class UserCommentListAdapter extends RecyclerView.Adapter<UserCommentList
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.comment.setText("Body: "+list.get(position).getBody());
+        holder.comment.setText(list.get(position).getBody());
     }
 
     @Override

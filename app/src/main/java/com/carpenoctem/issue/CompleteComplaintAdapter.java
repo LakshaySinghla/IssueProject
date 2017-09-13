@@ -128,6 +128,7 @@ public class CompleteComplaintAdapter extends RecyclerView.Adapter {
             ((HeaderViewHolder)holder).title.setText( data.getTitle() );
             ((HeaderViewHolder)holder).description.setText( data.getDescription() );
             ((HeaderViewHolder)holder).name.setText( "Name " + data.getUserId() );
+            ((HeaderViewHolder)holder).userName.setText("Name " + data.getUserId());
         }
     }
 

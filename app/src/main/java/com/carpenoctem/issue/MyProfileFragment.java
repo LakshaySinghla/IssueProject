@@ -99,10 +99,7 @@ public class MyProfileFragment extends Fragment{
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         //Toast.makeText(mainActivity,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
-                        if(item.getItemId() == R.id.settings){
-
-                        }
-                        else if(item.getItemId() == R.id.logout){
+                        if(item.getItemId() == R.id.logout){
                             logout();
                         }
                         return true;
